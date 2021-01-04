@@ -1,5 +1,6 @@
 package es.voghdev.isrgroot
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
@@ -14,6 +15,10 @@ class MainActivity : AppCompatActivity() {
 
         button.setOnClickListener {
             doNetworkRequest()
+        }
+
+        webViewButton.setOnClickListener {
+            startActivity(Intent(this, WebActivity::class.java))
         }
     }
 
