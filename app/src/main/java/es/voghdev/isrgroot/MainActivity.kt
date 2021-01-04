@@ -19,19 +19,26 @@ class MainActivity : AppCompatActivity() {
 
     private fun doNetworkRequest() {
         val t = Thread {
-            val client = OkHttpClient();
-
             try {
+                val client = OkHttpClient();
                 val request = Request.Builder()
                     .url("https://valid-isrgrootx1.letsencrypt.org/robots.txt")
                     .build();
                 val response = client.newCall(request).execute()
-//                assertTrue(response.code() == 200 || response.code() == 404);
-//                assertEquals(Protocol.HTTP_2, response.protocol());
+                textView.post {
+                    textView.text =
+                        "Response code: ${response.code()} protocol: ${response.protocol()}"
+                }
             } catch (sslhe: SSLHandshakeException) {
                 sslhe.printStackTrace()
+                textView.post {
+                    textView.text = "SSLHandshakeException: ${sslhe.message}"
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
+                textView.post {
+                    textView.text = "Exception: ${e.message}"
+                }
             }
         }
         t.start()
